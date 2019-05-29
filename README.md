@@ -8,7 +8,7 @@ These command-line tools are currently available:
 
 - `fma orient <directory>`: Displays all images in the given directory to the user, one by one. The user presses an arrow key (up, down, left or right) to indicate which edge of the subject is the top edge: i.e., for a photo shot upside-down the top edge is *down*; for a photo that's already in the correct orientation, the top edge is *up*. Pressing any other key will reverse to allow mistakes to be corrected. Orientation data is saved in `.params/<image_name>.json`.
 
-- `fma crop <directory>`: Uses darktable to regenerated XMP files for all images in the given directory _**(note that this will destroy any prior adjustments made in the darktable GUI)**_, then auto-crops each image, writing the new cropping parameters into the XMP files. In darktable's core options menu, _"look for updated xmp files on startup"_ must be enabled in order to allow XMP reloads.
+- `fma crop <directory>`: Uses darktable to regenerate XMP files for all images in the given directory _**(note that this will destroy any prior adjustments made in the darktable GUI)**_, then auto-crops each image, writing the new cropping parameters into the XMP files. In darktable's core options menu, _"look for updated xmp files on startup"_ must be enabled in order to allow XMP reloads.
 
 Functionality for these tools is implemented across several Python modules:
 
