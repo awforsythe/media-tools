@@ -12,6 +12,8 @@ imageio = "*"
 watchdog = "*"
 psutil = "*"
 lxml = "*"
+pywin32 = "*"
+pynput = "*"
 
 [requires]
 python_version = "3.6"
