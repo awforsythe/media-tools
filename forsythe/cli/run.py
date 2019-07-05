@@ -5,9 +5,24 @@ import argparse
 
 __commands__ = [
     {
-        'name': 'dump-config',
-        'module': 'config',
+        'name': 'dump-config', 'module': 'config',
         'help': 'Dump contents of FMA config file to stdout'
+    },
+    {
+        'name': 'edit-config', 'module': 'config',
+        'help': 'Open FMA config file for manual editing'
+    },
+    {
+        'name': 'make', 'module': 'collections',
+        'help': 'Create a new collection, and optionally selects it'
+    },
+    {
+        'name': 'select', 'module': 'collections',
+        'help': 'Sets the currently selected collection'
+    },
+    {
+        'name': 'report', 'module': 'collections',
+        'help': 'Reports on the contents of the selected collection',
     }
 ]
 

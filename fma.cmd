@@ -1,4 +1,2 @@
 @echo off
-pushd %~dp0
-pipenv run python main.py %*
-popd
+python %~dp0forsythe\cli\run.py %*
