@@ -4,6 +4,13 @@ import itertools
 from collections import defaultdict
 
 
+def splitext_l(s):
+    pos = s.find('.')
+    if pos < 0:
+        return s, ''
+    return s[:pos], s[pos:]
+
+
 def collect_dirs_and_files(rootdir):
     dirpaths = []
     filepaths = []
@@ -19,7 +26,7 @@ def collect_dirs_and_files(rootdir):
 def sort_files_by_ext(filepaths):
     filepaths_by_ext = defaultdict(set)
     for filepath in filepaths:
-        ext = os.path.splitext(filepath)[1].lower()
+        ext = splitext_l(filepath)[1].lower()
         filepaths_by_ext[ext].add(filepath)
     return filepaths_by_ext
 
@@ -69,7 +76,7 @@ class FileSequence(object):
                 raise ValueError('filepaths must all be in same directory: %s != %s' % (dirpath, last_dirpath))
             last_dirpath = dirpath
 
-            basename, ext = os.path.splitext(filename)
+            basename, ext = splitext_l(filename)
             if last_ext is not None and ext != last_ext:
                 raise ValueError('filepaths must all have the same extension: %s != %s' % (ext, last_ext))
             last_ext = ext
