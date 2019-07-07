@@ -27,6 +27,22 @@ __commands__ = [
     {
         'name': 'shoot',
         'help': 'Begins an interactive process for capturing photos',
+    },
+    {
+        'name': 'shift-exposure', 'module': 'exposure',
+        'help': 'Save an EV delta for all images in a set'
+    },
+    {
+        'name': 'dt-clear', 'module': 'dt',
+        'help': 'Delete existing .xmp sidecar files'
+    },
+    {
+        'name': 'dt-apply', 'module': 'dt',
+        'help': 'Apply saved image parameters to .xmp sidecar files',
+    },
+    {
+        'name': 'dt-open', 'module': 'dt',
+        'help': 'Opens a set of images in darktable'
     }
 ]
 

@@ -6,12 +6,11 @@ from forsythe.cli.commands.common import CollectionCommand
 
 from forsythe.files import collect_dirs_and_files, sort_files_by_ext, FileSequence
 
-from forsythe.images.cache import generate_cache, image_iterator
-from forsythe.images.params import write_param, read_param
+from forsythe.images.params import write_param
 
 from forsythe.eos.device import wait_for_device
 from forsythe.eos.window import activate_liveview, close_eos_windows, capture_liveview_photo
-from forsythe.eos.config import update_eos_config, get_image_filepath
+from forsythe.eos.config import update_eos_config
 
 from forsythe.interactive import interactive_process
 
