@@ -23,6 +23,10 @@ __commands__ = [
     {
         'name': 'report', 'module': 'collections',
         'help': 'Reports on the contents of the selected collection',
+    },
+    {
+        'name': 'shoot',
+        'help': 'Begins an interactive process for capturing photos',
     }
 ]
 

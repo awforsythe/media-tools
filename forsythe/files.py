@@ -14,12 +14,13 @@ def splitext_l(s):
 def collect_dirs_and_files(rootdir):
     dirpaths = []
     filepaths = []
-    for name in os.listdir(rootdir):
-        abspath = os.path.join(rootdir, name)
-        if os.path.isdir(abspath):
-            dirpaths.append(abspath)
-        else:
-            filepaths.append(abspath)
+    if os.path.isdir(rootdir):
+        for name in os.listdir(rootdir):
+            abspath = os.path.join(rootdir, name)
+            if os.path.isdir(abspath):
+                dirpaths.append(abspath)
+            else:
+                filepaths.append(abspath)
     return dirpaths, filepaths
 
 
