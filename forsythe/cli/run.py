@@ -33,6 +33,10 @@ __commands__ = [
         'help': 'Save an EV delta for all images in a set'
     },
     {
+        'name': 'configure-crop', 'module': 'crop',
+        'help': 'Tune auto-cropping parameters for a set of images'
+    },
+    {
         'name': 'dt-clear', 'module': 'dt',
         'help': 'Delete existing .xmp sidecar files'
     },

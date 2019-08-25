@@ -15,10 +15,11 @@ def get_midpoint(p0, p1):
 
 def get_lines(lines_result):
     lines = []
-    for result in lines_result:
-        assert len(result) == 1
-        x0, y0, x1, y1 = result[0]
-        lines.append(((x0, y0), (x1, y1)))
+    if lines_result is not None:
+        for result in lines_result:
+            assert len(result) == 1
+            x0, y0, x1, y1 = result[0]
+            lines.append(((x0, y0), (x1, y1)))
     return lines
 
 
@@ -79,8 +80,13 @@ def find_clusters(lines, coord, num_clusters, merge_threshold):
         def should_merge(self, other_center, distance_threshold):
             return abs(other_center - self.mean_center) <= distance_threshold
 
+    if not lines:
+        return [], []
+
     midpoints = np.array([get_midpoint(p0, p1) for p0, p1 in lines])
     data = np.float32(midpoints[:,coord])
+    if len(data) < num_clusters:
+        return [], []
 
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
     flags = cv2.KMEANS_RANDOM_CENTERS
@@ -98,6 +104,9 @@ def find_clusters(lines, coord, num_clusters, merge_threshold):
             cluster = Cluster()
             clusters.append(cluster)
         cluster.add(center, label, count)
+
+    if len(clusters) < 2:
+        return [], []
 
     clusters.sort(key=lambda c: -c.count)
     if clusters[0].mean_center < clusters[1].mean_center:
@@ -150,6 +159,8 @@ def find_edge_lines(mask, min_length_size_factor, max_gap_size_factor, max_incli
     cluster_merge_threshold = long_side * cluster_merge_threshold_size_factor
     left_lines, right_lines = find_clusters(vertical, 0, num_clusters, cluster_merge_threshold)
     top_lines, bottom_lines = find_clusters(horizontal, 1, num_clusters, cluster_merge_threshold)
+    if not left_lines or not right_lines or not top_lines or not bottom_lines:
+        return None
 
     return {
         Edge.left: left_lines,
@@ -174,11 +185,22 @@ def line_intersection(line_a, line_b):
 
 def find_corners(mask, min_length_size_factor, max_gap_size_factor, max_inclination_deg, line_exclusion_size_factor, num_clusters, cluster_merge_threshold_size_factor):
     edge_lines = find_edge_lines(mask, min_length_size_factor, max_gap_size_factor, max_inclination_deg, line_exclusion_size_factor, num_clusters, cluster_merge_threshold_size_factor)
+    if not edge_lines:
+        return None
 
     top_leftmost, top_rightmost = get_extremes(edge_lines[Edge.top], 0)
     bottom_leftmost, bottom_rightmost = get_extremes(edge_lines[Edge.bottom], 0)
     left_topmost, left_bottommost = get_extremes(edge_lines[Edge.left], 1)
     right_topmost, right_bottommost = get_extremes(edge_lines[Edge.right], 1)
+
+    if not top_leftmost or not top_rightmost:
+        return None
+    if not bottom_leftmost or not bottom_rightmost:
+        return None
+    if not left_topmost or not left_bottommost:
+        return None
+    if not right_topmost or not right_bottommost:
+        return None
 
     return {
         Corner.top_left: line_intersection(top_leftmost, left_topmost),
@@ -225,6 +247,9 @@ def rotate(p, theta):
 
 def find_rectilinear_corners(mask, min_length_size_factor, max_gap_size_factor, max_inclination_deg, line_exclusion_size_factor, num_clusters, cluster_merge_threshold_size_factor):
     corners = find_corners(mask, min_length_size_factor, max_gap_size_factor, max_inclination_deg, line_exclusion_size_factor, num_clusters, cluster_merge_threshold_size_factor)
+    if not corners:
+        return None
+
     edges = {
         Edge.left: (corners[Corner.top_left], corners[Corner.bottom_left]),
         Edge.right: (corners[Corner.top_right], corners[Corner.bottom_right]),

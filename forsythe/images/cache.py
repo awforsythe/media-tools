@@ -16,9 +16,11 @@ def get_cached_image_filepath(raw_filepath):
 
 
 def regenerate_cached_image(raw_filepath):
+    cached_filepath = get_cached_image_filepath(raw_filepath)
+    os.makedirs(os.path.dirname(cached_filepath), exist_ok=True)
     with rawpy.imread(raw_filepath) as raw:
         rgb = raw.postprocess()
-        imageio.imsave(get_cached_image_filepath(raw_filepath), rgb)
+        imageio.imsave(cached_filepath, rgb)
 
 
 def generate_cache(images_dir, force=False, multiprocess=True):

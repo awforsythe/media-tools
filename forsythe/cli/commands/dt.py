@@ -57,6 +57,9 @@ class DtClearCommand(CollectionCommand):
         print('')
         print('Deleted %d files.' % num_deleted)
 
+        print('Regenerating .xmp sidecar files...')
+        regenerate_xmps(images_dir)
+
 
 
 class DtApplyCommand(CollectionCommand):
