@@ -5,6 +5,7 @@ from forsythe.cropper.rect import find_rectilinear_corners
 from forsythe.cropper.shrink import shrink_inside_mask
 from forsythe.cropper.output import get_crop_params, rotate_crop_params
 from forsythe.cropper.types import Corner, Edge
+from forsythe.images.params import read_param
 
 CORNER_SIZE_FACTOR = 0.05
 KEY_RANGE_HSV = [5.0, 25.0, 25.0]
