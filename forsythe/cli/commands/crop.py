@@ -175,7 +175,7 @@ class ConfigureCropCommand(CollectionCommand):
                     num_saved = 0
                     for num in seq.numbers:
                         filepath = seq.pattern % num
-                        params = read_params(cr2_filepath)
+                        params = read_params(filepath)
                         params['crop_corner_size_factor'] = corner_size_factor
                         params['crop_key_range_h'] = key_range_h
                         params['crop_key_range_s'] = key_range_s
@@ -191,7 +191,7 @@ class ConfigureCropCommand(CollectionCommand):
                         params['crop_inset_interval'] = inset_interval
                         params['crop_inset_white_threshold'] = inset_white_threshold
                         params['crop_extra_inset'] = extra_inset
-                        write_params(cr2_filepath, params)
+                        write_params(filepath, params)
                         num_saved += 1
                     print('Wrote crop params for %d images.' % num_saved)
                     save_prompted = False
