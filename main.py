@@ -229,11 +229,11 @@ def run_crop(args):
     regenerate_xmps(args.directory)
 
     for image_filepath, cached_filepath in image_iterator(args.directory):
-        top_edge = read_param(image_filepath, 'top_edge', 'top')
+        image_params = read_params(image_filepath)
         ev_delta = 0.4
 
         try:
-            crop_params = compute_crop_params(cached_filepath, top_edge)
+            crop_params = compute_crop_params(cached_filepath, image_params)
             print ('%s -> %r' % (os.path.basename(image_filepath), crop_params))
 
             iop_clipping = dt_iop_clipping_params_t()

@@ -4,7 +4,7 @@ import re
 from forsythe.cli.commands.common import CollectionCommand
 from forsythe.files import collect_dirs_and_files, sort_files_by_ext, FileSequence
 from forsythe.images.cache import generate_cache, image_iterator
-from forsythe.images.params import read_param
+from forsythe.images.params import read_params
 from forsythe.darktable.process import regenerate_xmps, run_darktable
 from forsythe.darktable.iop import dt_iop_clipping_params_t, dt_iop_exposure_params_t
 from forsythe.darktable.xmp import edit_xmp
@@ -116,9 +116,9 @@ class DtApplyCommand(CollectionCommand):
         for image_filepath, cached_filepath in image_iterator(images_dir):
             iops = []
 
-            top_edge = read_param(image_filepath, 'top_edge', 'top')
+            image_params = read_params(image_filepath)
             try:
-                crop_params = compute_crop_params(cached_filepath, top_edge)
+                crop_params = compute_crop_params(cached_filepath, image_params)
                 print ('%s -> %r' % (os.path.basename(image_filepath), crop_params))
 
                 iop_clipping = dt_iop_clipping_params_t()
@@ -132,7 +132,7 @@ class DtApplyCommand(CollectionCommand):
             except Exception as exc:
                 print('WARNING: Failed to crop %s: %s' % (os.path.basename(image_filepath), exc))
 
-            ev_delta = read_param(image_filepath, 'ev_delta')
+            ev_delta = image_params.get('ev_delta')
             if ev_delta:
                 iop_exposure = dt_iop_exposure_params_t()
                 iop_exposure.exposure = ev_delta
