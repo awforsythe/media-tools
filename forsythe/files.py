@@ -1,7 +1,9 @@
 import os
 import re
+import shutil
 import itertools
 from collections import defaultdict
+from contextlib import contextmanager
 
 
 def splitext_l(s):
@@ -30,6 +32,17 @@ def sort_files_by_ext(filepaths):
         ext = splitext_l(filepath)[1].lower()
         filepaths_by_ext[ext].add(filepath)
     return filepaths_by_ext
+
+
+@contextmanager
+def temporary_directory(dirpath):
+    if os.path.isdir(dirpath):
+        shutil.rmtree(dirpath)
+    os.makedirs(dirpath, exist_ok=True)
+    try:
+        yield
+    finally:
+        shutil.rmtree(dirpath)
 
 
 class FileSequence(object):

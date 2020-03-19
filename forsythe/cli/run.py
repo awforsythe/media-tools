@@ -37,6 +37,10 @@ __commands__ = [
         'help': 'Tune auto-cropping parameters for a set of images'
     },
     {
+        'name': 'tag-sides', 'module': 'sides',
+        'help': 'Tag images as front and back sides of the same photo'
+    },
+    {
         'name': 'dt-clear', 'module': 'dt',
         'help': 'Delete existing .xmp sidecar files'
     },
