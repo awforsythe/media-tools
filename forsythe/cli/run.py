@@ -41,6 +41,10 @@ __commands__ = [
         'help': 'Tag images as front and back sides of the same photo'
     },
     {
+        'name': 'match-sides', 'module': 'sides',
+        'help': 'Match previously tagged front and back sides as pairs'
+    },
+    {
         'name': 'dt-clear', 'module': 'dt',
         'help': 'Delete existing .xmp sidecar files'
     },
